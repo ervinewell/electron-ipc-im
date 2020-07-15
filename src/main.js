@@ -39,9 +39,15 @@ class Main {
 
                 ipcMain.on(channel, (event, data) => {
                     if(data && (data.$$symbol === $$symbol)) {
+                        const fromContentsId = event.sender.id
                         data.meta = Object.assign({}, data.meta || {}, {
-                            fromContentsId: event.sender.id
+                            fromContentsId
                         })
+                        if (data.params && data.params.data) {
+                            data.params.data.meta = Object.assign({}, data.params.data.meta || {}, {
+                                fromContentsId
+                            })
+                        }
                         distribute(data);
                     }
                 });

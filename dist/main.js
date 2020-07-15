@@ -59,9 +59,17 @@ var Main = function Main() {
       var distribute = this.distribute;
       ipcMain.on(channel, function (event, data) {
         if (data && data.$$symbol === $$symbol) {
+          var fromContentsId = event.sender.id;
           data.meta = Object.assign({}, data.meta || {}, {
-            fromContentsId: event.sender.id
+            fromContentsId: fromContentsId
           });
+
+          if (data.params && data.params.data) {
+            data.params.data.meta = Object.assign({}, data.params.data.meta || {}, {
+              fromContentsId: fromContentsId
+            });
+          }
+
           distribute(data);
         }
       });
