@@ -3,6 +3,7 @@
  */
 
 const { app, ipcMain, BrowserWindow } = require('electron');
+const path = require('path')
 const Main = require('../src/main');
 
 app.on('window-all-closed', () => {
@@ -22,7 +23,7 @@ function ready() {
         });
     } catch (e) {}
 
-    let url = `file:///Users/lizhengnacl/liz/electron-ipc-im/example/im/im.html`;
+    let url = 'file://' + path.join(__dirname, './im/im.html')
     // 任何方法加载都行
     global['rendererManager'].load(url, 'im', {
         webPreferences: {
